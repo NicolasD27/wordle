@@ -35,6 +35,7 @@ export class AppService implements OnApplicationBootstrap {
 
 	getGuess(guess: string, day: number = 0) {
     const answer = this.getTodaysWord(day);
+	guess = guess.toLowerCase();
     if (guess.length != 5) {
       throw new BadRequestException('Words must be 5 letters');
     } else if (!this.dict.has(guess)) {
