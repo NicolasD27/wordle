@@ -6,6 +6,7 @@ const app = new Vue({
 		guess: "",
         response: [],
         previousGuesses: [],
+        previousResponses: [],
         step: 0,
         score: 0,
         letters: document.querySelectorAll(".letter-container")
@@ -13,30 +14,44 @@ const app = new Vue({
 	},
 	methods: {
 		sendGuess() {
-            fetch(`http://localhost:3000/${guess}`)
+            console.log(this.guess)
+            fetch(`http://localhost:3000/${this.guess}`)
+            .then(res => res.json())
             .then(res => {
                 console.log(res)
-                response = res;
-                score = 0
-                response.forEach((el, i) => {
-                    if (el == 0)
-                        letters[step * 5 + i].classList.add("red")
-                    else if (el == 1)
-                        letters[step * 5 + i].classList.add("yellow")
-                    else if (el == 2)
-                    {
-                        score++;
-                        letters[step * 5 + i].classList.add("green")
-                    }
-                })
+                this.response = res;
+                this.score = 0
+                this.previousGuesses.push(this.guess);
+                this.previousResponses.push(this.response)
+                this.response.forEach((element, i) => {
+                    this.letters[0].classList.add("red")
 
-                previousGuesses.push(guess);
-                if (score == 5)
+                    console.log(element, " ", this.step * 5 + i)
+                    if (element == 0)
+                    {
+                        console.log("here")
+                        this.letters[this.step * 5 + i].classList.add("red")
+                    }
+                    else if (element == 2)
+                        this.letters[this.step * 5 + i].classList.add("yellow")
+                    else if (element == 1)
+                    {
+                        this.score++;
+                        this.letters[this.step * 5 + i].classList.add("green")
+                    }
+                });
+                    
+                
+            
+
+                if (this.score == 5)
                 {
+                    this.previousGuesses = []
+                    this.previousResponses = []
                     document.querySelector(".game-container")
                 }
-                guess = ""
-                step++;
+                this.guess = ""
+                this.step++;
             })
             .catch(err => {
                 console.log(err)
