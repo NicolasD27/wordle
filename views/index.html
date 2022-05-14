@@ -18,11 +18,12 @@
     <div id="app" >
 
         
-        <div class="game-container" >
+        <div class="game-container" :class="{error:error}" >
             <div class="pyro" :class="{hidden:score != 5}">
                 <div class="before"></div>
                 <div class="after"></div>
             </div>
+
             <button @click.prevent="nextWord"  class="btn btn-primary">Next Word</button>
             <div class="game-row">
                 <div class="letter-container"  :class="{red:previousResponses.length > 0 && previousResponses[0][0] == 0, green:previousResponses.length > 0 && previousResponses[0][0] == 1, yellow:previousResponses.length > 0 && previousResponses[0][0] == 2}"><span v-if="previousGuesses.length > 0 && previousGuesses[0].length == 5">{{ previousGuesses[0][0] }}</span> </div>
