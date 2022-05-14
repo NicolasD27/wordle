@@ -69,7 +69,7 @@
             </div>
         </div>
         <form>
-            <input v-model="guess" placeholder="your guess " type="string" id="guess-input">
+            <input v-model="guess" placeholder="your guess " type="string" id="guess-input" ref="input">
             <button @click.prevent="sendGuess"  class="btn btn-primary">Send</button>
         </form>
         

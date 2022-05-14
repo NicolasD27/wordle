@@ -60,8 +60,8 @@ const app = new Vue({
             this.score = 0;
         }
 	},
-	created() {
-        console.log("created")
+	mounted() {
+        this.$refs.input.focus()
 	}
 });
 
