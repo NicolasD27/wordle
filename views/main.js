@@ -9,19 +9,20 @@ const app = new Vue({
         previousResponses: [],
         step: 0,
         score: 0,
-        letters: document.querySelectorAll(".letter-container")
+        letters: document.querySelectorAll(".letter-container"),
+        day: 0
 		
 	},
 	methods: {
 		sendGuess() {
             console.log(this.guess)
-            fetch(`http://localhost:3000/${this.guess}`)
+            fetch(`http://localhost:3000/${this.day}/${this.guess}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res)
                 this.response = res;
                 this.score = 0
-                this.previousGuesses.push(this.guess);
+                this.previousGuesses.push(this.guess.toUpperCase());
                 this.previousResponses.push(this.response)
                 this.response.forEach((element, i) => {
                     this.letters[0].classList.add("red")
@@ -40,22 +41,16 @@ const app = new Vue({
                         this.letters[this.step * 5 + i].classList.add("green")
                     }
                 });
-                    
-                
-            
-
-                if (this.score == 5)
-                {
-                    this.previousGuesses = []
-                    this.previousResponses = []
-                    document.querySelector(".game-container")
-                }
                 this.guess = ""
                 this.step++;
             })
-            .catch(err => {
-                console.log(err)
-            })
+            
+            
+        },
+        nextWord() {
+            this.previousGuesses = []
+            this.previousResponses = []
+            this.day++;
         }
 	},
 	created() {

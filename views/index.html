@@ -6,13 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <title>Wordle game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app" >
+
+        
         <div class="game-container" >
+            <div class="pyro" :class="{hidden:score != 5}">
+                <div class="before"></div>
+                <div class="after"></div>
+            </div>
+            <button @click.prevent="nextWord"  class="btn btn-primary">Next Word</button>
             <div class="game-row">
                 <div class="letter-container"  :class="{red:previousResponses.length > 0 && previousResponses[0][0] == 0, green:previousResponses.length > 0 && previousResponses[0][0] == 1, yellow:previousResponses.length > 0 && previousResponses[0][0] == 2}"><span v-if="previousGuesses.length > 0 && previousGuesses[0].length == 5">{{ previousGuesses[0][0] }}</span> </div>
                 <div class="letter-container"  :class="{red:previousResponses.length > 0 && previousResponses[0][1] == 0, green:previousResponses.length > 0 && previousResponses[0][1] == 1, yellow:previousResponses.length > 0 && previousResponses[0][1] == 2}"><span v-if="previousGuesses.length > 0 && previousGuesses[0].length == 5">{{ previousGuesses[0][1] }}</span> </div>
@@ -60,6 +71,7 @@
             <input v-model="guess" placeholder="your guess " type="string" id="guess-input">
             <button @click.prevent="sendGuess"  class="btn btn-primary">Send</button>
         </form>
+        
     </div>
 
 	<script src="main.js"></script>
