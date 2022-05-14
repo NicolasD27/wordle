@@ -74,6 +74,6 @@ export class AppService implements OnApplicationBootstrap {
       i++;
     }
 
-	  return { score: score };
+	  return score;
   }
 }
