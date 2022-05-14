@@ -9,6 +9,11 @@ class GuessDto {
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @Get(':day/:guess')
+  getGuessOffset(@Param('guess') guess: string, @Param('day') day: string) {
+    return this.appService.getGuess(guess, +day);
+  }
+
   @Get(':guess')
   getGuess(@Param('guess') guess: string) {
     return this.appService.getGuess(guess);

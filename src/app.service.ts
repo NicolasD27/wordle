@@ -19,9 +19,9 @@ export class AppService implements OnApplicationBootstrap {
     }
   }
 	
-  private getTodaysWord(): string {
+  private getTodaysWord(offset: number): string {
     const now = new Date();
-    const day = Math.floor(+now/(1000*60*60*24) % this.dict.size);
+    const day = Math.floor(((+now/(1000*60*60*24)) + offset) % this.dict.size);
     console.log(day);
     let count = 0;
     for (let item of this.dict) {
@@ -33,8 +33,8 @@ export class AppService implements OnApplicationBootstrap {
     }
   }
 
-	getGuess(guess: string) {
-    const answer = this.getTodaysWord();
+	getGuess(guess: string, day: number = 0) {
+    const answer = this.getTodaysWord(day);
     if (guess.length != 5) {
       return { error: "Word must be 5 letters"}
     } else if (!this.dict.has(guess)) {
