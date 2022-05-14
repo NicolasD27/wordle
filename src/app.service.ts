@@ -1,4 +1,4 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { BadRequestException, Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import * as fs from 'fs';
 import * as readline from 'readline';
 
@@ -36,9 +36,9 @@ export class AppService implements OnApplicationBootstrap {
 	getGuess(guess: string, day: number = 0) {
     const answer = this.getTodaysWord(day);
     if (guess.length != 5) {
-      return { error: "Word must be 5 letters"}
+      throw new BadRequestException('Words must be 5 letters');
     } else if (!this.dict.has(guess)) {
-      return { error: "Not a word" }
+      throw new BadRequestException('Not a valid word');
     }
     const score = [0, 0, 0, 0, 0];
     
